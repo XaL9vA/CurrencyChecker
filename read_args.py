@@ -14,7 +14,7 @@ from args_validator import ArgsValidator
            "The date cannot be less than 01.01.1990\n"
            "Input",
     help="Records the date of conversion",
-    callback= ArgsValidator.validate_conversion_date
+    callback=ArgsValidator.validate_conversion_date
 )
 @click.option(
     "--currency_from",
@@ -44,9 +44,17 @@ from args_validator import ArgsValidator
            "File\nYour choice",
     callback=ArgsValidator.validate_output_channel
 )
-def read_args(conversion_date: str, currency_from: str, currency_to: str, output_channel: str) -> CLIArgs:
+def read_args(
+        conversion_date: str,
+        currency_from: str,
+        currency_to: str,
+        output_channel: str
+) -> CLIArgs:
     try:
-        ArgsValidator.identity_check(currency_from, currency_to)
+        ArgsValidator.identity_check(
+            currency_from,
+            currency_to
+        )
     except click.BadParameter:
         print("-------------------------------------------------------------------\n"
               "Error: Currencies for conversion cannot be the same, please return")

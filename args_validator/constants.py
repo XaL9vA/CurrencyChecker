@@ -1,7 +1,7 @@
 from typing import Set
 
 
-CURRENCY_VALID: Set[str] = {
+CURRENCIES: Set[str] = {
     "EUR",
     "USD",
     "JPY",
@@ -37,7 +37,7 @@ CURRENCY_VALID: Set[str] = {
     "ZAR"
 }
 
-CURRENCY_OUTPUT: Set[str] = {
+OUTPUT_CHANNELS: Set[str] = {
     "terminal",
     "file"
 }

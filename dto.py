@@ -6,4 +6,3 @@ class CLIArgs:
     currency_to: str
     conversion_date: str
     output_channel: str
-

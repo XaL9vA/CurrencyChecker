@@ -1,4 +1,2 @@
 from .validator import ArgsValidator
-from .constants import CURRENCY_VALID, CURRENCY_OUTPUT
-
-
+from .constants import CURRENCIES, OUTPUT_CHANNELS

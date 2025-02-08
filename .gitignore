@@ -1,1 +1,6 @@
+# Python
 .idea/
+*.env
+*.pyc
+*.log
+*.tmp
