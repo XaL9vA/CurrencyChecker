@@ -9,9 +9,9 @@ from args_validator import ArgsValidator
     required=True,
     type=str,
     prompt="----------------------------------------------------------------------------\n"
-           "Enter the date in the format - day.month.year\n"
-           "Example: 10.10.2010\n"
-           "The date cannot be less than 01.01.1990\n"
+           "Enter the date in the format - day.month.year\tExample: 10.10.2010\n"
+           "The date can't be “today”\n"
+           "The date cannot be less than 01.01.2000\n"
            "Input",
     help="Records the date of conversion",
     callback=ArgsValidator.validate_conversion_date
@@ -50,18 +50,9 @@ def read_args(
         currency_to: str,
         output_channel: str
 ) -> CLIArgs:
-    try:
-        ArgsValidator.identity_check(
-            currency_from,
-            currency_to
-        )
-    except click.BadParameter:
-        print("-------------------------------------------------------------------\n"
-              "Error: Currencies for conversion cannot be the same, please return")
-    else:
-        return CLIArgs(
-            conversion_date=conversion_date,
-            currency_from=currency_from,
-            currency_to=currency_to,
-            output_channel=output_channel
-        )
+    return CLIArgs(
+        conversion_date=conversion_date,
+        currency_from=currency_from,
+        currency_to=currency_to,
+        output_channel=output_channel
+    )
