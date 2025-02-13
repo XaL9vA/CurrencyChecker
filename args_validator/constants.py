@@ -1,6 +1,5 @@
 from typing import Set
 
-
 CURRENCIES: Set[str] = {
     "EUR",
     "USD",
