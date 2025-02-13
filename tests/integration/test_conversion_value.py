@@ -11,9 +11,16 @@ class TestReceiptConversionValue:
                                  ("USD", "RUB", "01.01.2000", 27.48314, does_not_raises()),
                              ]
                              )
-    def test_get_conversion_value(self, currency_from: str, currency_to: str,
-                                  conversion_date: str, expected_result: Optional[str], expectation) -> None:
+    def test_get_conversion_value(
+            self, currency_from: str,
+            currency_to: str,
+            conversion_date: str,
+            expected_result: Optional[str],
+            expectation
+    ) -> None:
         with expectation:
             currency_converter = CurrenciesConverter()
-            assert currency_converter.convert(currency_from=currency_from, currency_to=currency_to,
-                                           conversion_date=conversion_date) == expected_result
+            assert currency_converter.convert(currency_from=currency_from,
+                                              currency_to=currency_to,
+                                              conversion_date=conversion_date
+                                              ) == expected_result

@@ -1,13 +1,12 @@
 from typing import Dict
-from os import getenv
+from config import config
 import requests
 import json
-import config
 
 
 class CurrenciesConverter:
     def __init__(self) -> None:
-        self.__API_KEY = getenv("API_KEY")
+        self.__API_KEY = config.api_key
 
     def convert(self, currency_from: str, currency_to: str, conversion_date: str) -> float:
         conversion_date: str = self.__correct_date_format(conversion_date=conversion_date)

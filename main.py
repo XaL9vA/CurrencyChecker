@@ -15,6 +15,5 @@ def main():
         currency_to=args.currency_to
     )
 
-
 if __name__ == '__main__':
     main()
