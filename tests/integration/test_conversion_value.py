@@ -1,4 +1,4 @@
-from conversion_value import ObtainingCurrencyQuotes
+from conversion_value import CurrenciesConverter
 from contextlib import nullcontext as does_not_raises
 from typing import Optional
 import pytest
@@ -14,5 +14,6 @@ class TestReceiptConversionValue:
     def test_get_conversion_value(self, currency_from: str, currency_to: str,
                                   conversion_date: str, expected_result: Optional[str], expectation) -> None:
         with expectation:
-            assert ObtainingCurrencyQuotes(currency_from=currency_from, currency_to=currency_to,
-                                           conversion_date=conversion_date).get_conversion_value() == expected_result
+            currency_converter = CurrenciesConverter()
+            assert currency_converter.convert(currency_from=currency_from, currency_to=currency_to,
+                                           conversion_date=conversion_date) == expected_result

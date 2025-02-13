@@ -77,13 +77,9 @@ class TestArgsValidator:
             expected_result: Optional[str],
             expectation
     ) -> None:
-        # Создание команды и контекста
         command = click.Command("test")
         ctx = click.Context(command)
-
-        # Установка параметра currency_from в контекст
         ctx.params.update({"currency_from": currency_from})
-
         with expectation:
             assert ArgsValidator.validate_currency_to(
                 ctx=ctx,
