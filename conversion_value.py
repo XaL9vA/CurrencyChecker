@@ -1,12 +1,11 @@
 from typing import Dict
-from config import config
 import requests
 import json
 
 
 class CurrenciesConverter:
-    def __init__(self) -> None:
-        self.__API_KEY = config.api_key
+    def __init__(self, api_key: str) -> None:
+        self.__API_KEY = api_key
 
     def convert(self, currency_from: str, currency_to: str, conversion_date: str) -> float:
         conversion_date: str = self.__correct_date_format(conversion_date=conversion_date)
