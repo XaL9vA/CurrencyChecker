@@ -4,6 +4,7 @@ from greetings import greetings
 from conversion_value import CurrenciesConverter
 from config import config
 
+
 def main():
     greetings()
     args: CLIArgs = read_args(standalone_mode=False)
@@ -14,6 +15,7 @@ def main():
         currency_from=args.currency_from,
         currency_to=args.currency_to
     )
+
 
 if __name__ == '__main__':
     main()
