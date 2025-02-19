@@ -1,6 +1,6 @@
 from typing import Dict
+from json import loads as json_loads
 import requests
-import json
 
 
 class CurrenciesConverter:
@@ -23,7 +23,7 @@ class CurrenciesConverter:
                         "https://api.freecurrencyapi.com/v1/historical",
                         params=params
                     )
-                    return json.loads(api_response.text)["data"][f"{conversion_date}"][f"{currency_to}"]
+                    return json_loads(api_response.text)["data"][f"{conversion_date}"][f"{currency_to}"]
                 else:
                     print(f"Error - {response.status_code}")
             except requests.exceptions.RequestException as exception:

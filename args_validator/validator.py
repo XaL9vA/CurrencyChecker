@@ -1,6 +1,6 @@
-from .constants import CURRENCIES, OUTPUT_CHANNELS
 from datetime import datetime
 import click
+from .constants import CURRENCIES, OUTPUT_CHANNELS
 
 
 class ArgsValidator:

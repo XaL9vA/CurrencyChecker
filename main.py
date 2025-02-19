@@ -1,6 +1,6 @@
-from read_args import read_args
-from dto import CLIArgs
 from greetings import greetings
+from dto import CLIArgs
+from read_args import read_args
 from conversion_value import CurrenciesConverter
 from config import config
 

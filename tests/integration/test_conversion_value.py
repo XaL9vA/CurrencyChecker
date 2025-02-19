@@ -1,14 +1,14 @@
-from conversion_value import CurrenciesConverter
-from contextlib import nullcontext as does_not_raises
 from typing import Optional
+from contextlib import nullcontext as does_not_raise
 import pytest
+from conversion_value import CurrenciesConverter
 
 
 class TestReceiptConversionValue:
     @pytest.mark.parametrize("currency_from, currency_to, conversion_date ,expected_result, expectation",
                              [
-                                 ("USD", "RUB", "10.01.2025", 101.9166460968, does_not_raises()),
-                                 ("USD", "RUB", "01.01.2000", 27.48314, does_not_raises()),
+                                 ("USD", "RUB", "10.01.2025", 101.9166460968, does_not_raise()),
+                                 ("USD", "RUB", "01.01.2000", 27.48314, does_not_raise()),
                              ]
                              )
     def test_get_conversion_value(

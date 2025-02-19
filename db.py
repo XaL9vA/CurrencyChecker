@@ -1,32 +1,28 @@
 import sqlite3
 from typing import Optional, Tuple
-from dto import DBColumns
 
 
 class Storage:
     def __init__(self, dsn: str) -> None:
+        """SQL"""
         self.__session: sqlite3.Connection = sqlite3.connect(dsn)
         self.__cursor: sqlite3.Cursor = self.__session.cursor()
         self.__create_tables()
 
-    def get(self, currency_from: str, currency_to: str, conversion_date: str) -> Optional[DBColumns]:
+    def get(self, currency_from: str, currency_to: str, conversion_date: str) -> Optional[float]:
         """Writes values for subsequent manipulations to the dataclass"""
         with self.__session:
             self.__cursor.execute("""
-                SELECT currency_from, currency_to, conversion_date, conversion_result FROM currencies_history
+                SELECT currency_from, currency_to, conversion_date, conversion_value FROM currencies_history
                 WHERE currency_from = ? AND currency_to = ? AND conversion_date = ?
                 """, (currency_from, currency_to, conversion_date))
             row: Optional[Tuple[str, str, str, float]] = self.__cursor.fetchone()
             if row is None:
                 return None
-            return DBColumns(
-                currency_from=row[0],
-                currency_to=row[1],
-                conversion_date=row[2],
-                conversion_result=row[3]
-            )
 
-    def add(self, currency_from: str, currency_to: str, conversion_date: str, conversion_result: float) -> None:
+            return row[3]
+
+    def add(self, currency_from: str, currency_to: str, conversion_date: str, conversion_value: float) -> None:
         """Adds a new row to an operation in the table"""
         with self.__session:
             self.__cursor.execute("""   
@@ -34,10 +30,11 @@ class Storage:
                 currency_from, 
                 currency_to, 
                 conversion_date, 
-                conversion_result
+                conversion_value
                 )
                 VALUES (?, ?, ?, ?)
-                """, (currency_from, currency_to, conversion_date, conversion_result))
+                """, (currency_from, currency_to, conversion_date, conversion_value))
+            
             self.__session.commit()
             print("A new entry has been added")
 
@@ -51,12 +48,14 @@ class Storage:
 
             if self.__cursor.fetchone():
                 return True  # Returns if the record is found
+            
             return False
 
     def close(self) -> None:
         """Safely closes the connection to the database"""
         if hasattr(self, '__cursor') and self.__cursor:
             self.__cursor.close()
+
         if hasattr(self, '__session') and self.__session:
             self.__session.close()
             self.__session = None
@@ -66,11 +65,11 @@ class Storage:
         with self.__session:
             self.__cursor.execute("""
                 CREATE TABLE IF NOT EXISTS currencies_history(
-                    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                     currency_from TEXT NOT NULL,
                     currency_to TEXT NOT NULL,
                     conversion_date TEXT NOT NULL,
-                    conversion_result REAL NOT NULL
+                    conversion_value REAL NOT NULL
                     )
                 """)
 
