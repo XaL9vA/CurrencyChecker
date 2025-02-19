@@ -5,7 +5,7 @@ import requests
 
 class CurrenciesConverter:
     def __init__(self, api_key: str) -> None:
-        self.__API_KEY = api_key
+        self.__API_KEY: str = api_key
 
     def convert(self, currency_from: str, currency_to: str, conversion_date: str) -> float:
         conversion_date: str = self.__correct_date_format(conversion_date=conversion_date)
@@ -17,15 +17,20 @@ class CurrenciesConverter:
         }
         with requests.Session() as local_session:
             try:
-                response: requests.Response = local_session.get("https://app.freecurrencyapi.com/dashboard")
+                response: requests.Response = local_session.get(
+                    "https://app.freecurrencyapi.com/dashboard",
+                    timeout=3)
                 if response.ok:
                     api_response: requests.Response = local_session.get(
                         "https://api.freecurrencyapi.com/v1/historical",
+                        timeout=5,
                         params=params
                     )
                     return json_loads(api_response.text)["data"][f"{conversion_date}"][f"{currency_to}"]
                 else:
                     print(f"Error - {response.status_code}")
+            except requests.exceptions.Timeout:
+                print("Connection error, try again later")
             except requests.exceptions.RequestException as exception:
                 print(f"Oops, something went wrong: {exception}")
 
