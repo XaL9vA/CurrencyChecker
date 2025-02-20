@@ -14,6 +14,7 @@ class Storage:
                 SELECT conversion_value FROM currencies_history
                 WHERE currency_from = ? AND currency_to = ? AND conversion_date = ?
                 """, (currency_from, currency_to, conversion_date))
+
             row: Optional[Tuple[float]] = self.__cursor.fetchone()
             if row is None:
                 return None

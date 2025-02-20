@@ -30,6 +30,7 @@ def main():
             currency_from=args.currency_from,
             currency_to=args.currency_to
         )
+
         db.add(
             currency_from=args.currency_from,
             currency_to=args.currency_to,
