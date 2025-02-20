@@ -23,19 +23,19 @@ def main():
             currency_to=args.currency_to,
             conversion_date=args.conversion_date
         )
-
-    converter = CurrenciesConverter(config.api_key)
-    conversion_value: float = converter.convert(
-        conversion_date=args.conversion_date,
-        currency_from=args.currency_from,
-        currency_to=args.currency_to
-    )
-    db.add(
-        currency_from=args.currency_from,
-        currency_to=args.currency_to,
-        conversion_date=args.conversion_date,
-        conversion_value=conversion_value
-    )
+    else:
+        converter = CurrenciesConverter(config.api_key)
+        conversion_value: float = converter.convert(
+            conversion_date=args.conversion_date,
+            currency_from=args.currency_from,
+            currency_to=args.currency_to
+        )
+        db.add(
+            currency_from=args.currency_from,
+            currency_to=args.currency_to,
+            conversion_date=args.conversion_date,
+            conversion_value=conversion_value
+        )
 
 
 if __name__ == '__main__':

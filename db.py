@@ -17,6 +17,7 @@ class Storage:
             row: Optional[Tuple[float]] = self.__cursor.fetchone()
             if row is None:
                 return None
+
             return float(row[0])
 
     def add(self, currency_from: str, currency_to: str, conversion_date: str, conversion_value: float) -> None:
