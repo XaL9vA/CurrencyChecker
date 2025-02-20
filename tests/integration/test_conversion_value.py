@@ -1,7 +1,7 @@
 from typing import Optional
 from contextlib import nullcontext as does_not_raise
 import pytest
-from conversion_value import CurrenciesConverter
+from converter import CurrenciesConverter
 from config import config
 
 class TestReceiptConversionValue:

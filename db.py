@@ -1,29 +1,25 @@
 import sqlite3
-from typing import Optional, Tuple
+from typing import Tuple, Optional
 
 
 class Storage:
     def __init__(self, dsn: str) -> None:
-        """SQL"""
         self.__session: sqlite3.Connection = sqlite3.connect(dsn)
         self.__cursor: sqlite3.Cursor = self.__session.cursor()
         self.__create_tables()
 
     def get(self, currency_from: str, currency_to: str, conversion_date: str) -> Optional[float]:
-        """Writes values for subsequent manipulations to the dataclass"""
         with self.__session:
             self.__cursor.execute("""
-                SELECT currency_from, currency_to, conversion_date, conversion_value FROM currencies_history
+                SELECT conversion_value FROM currencies_history
                 WHERE currency_from = ? AND currency_to = ? AND conversion_date = ?
                 """, (currency_from, currency_to, conversion_date))
-            row: Optional[Tuple[str, str, str, float]] = self.__cursor.fetchone()
+            row: Optional[Tuple[float]] = self.__cursor.fetchone()
             if row is None:
                 return None
-
-            return row[3]
+            return float(row[0])
 
     def add(self, currency_from: str, currency_to: str, conversion_date: str, conversion_value: float) -> None:
-        """Adds a new row to an operation in the table"""
         with self.__session:
             self.__cursor.execute("""   
                 INSERT INTO currencies_history (
@@ -39,7 +35,6 @@ class Storage:
             print("A new entry has been added")
 
     def exists(self, currency_from: str, currency_to: str, conversion_date: str) -> bool:
-        """Checking for the existence of similar records in the database"""
         with self.__session:
             self.__cursor.execute("""
                 SELECT 1 FROM currencies_history

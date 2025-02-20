@@ -26,7 +26,7 @@ class CurrenciesConverter:
                         timeout=5,
                         params=params
                     )
-                    return json_loads(api_response.text)["data"][f"{conversion_date}"][f"{currency_to}"]
+                    return json_loads(api_response.text)["data"][conversion_date][currency_to]
                 else:
                     print(f"Error - {response.status_code}")
             except requests.exceptions.Timeout:
