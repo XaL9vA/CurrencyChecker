@@ -17,6 +17,7 @@ def main():
         currency_to=args.currency_to,
         conversion_date=args.conversion_date
     )
+
     if exists:
         conversion_value: float = db.get(
             currency_from=args.currency_from,
