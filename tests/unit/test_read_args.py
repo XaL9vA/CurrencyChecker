@@ -1,9 +1,9 @@
-from args_validator.validator import ArgsValidator
 from contextlib import nullcontext as does_not_raise
 from typing import Optional
 from datetime import datetime
-import pytest
 import click
+import pytest
+from args_validator.validator import ArgsValidator
 
 
 class TestArgsValidator:
