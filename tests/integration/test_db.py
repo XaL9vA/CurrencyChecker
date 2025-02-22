@@ -1,5 +1,5 @@
 from contextlib import nullcontext as does_not_raise
-from typing import Optional
+from typing import Optional, Union
 import pytest
 from db import Storage
 
@@ -48,7 +48,7 @@ class TestDB:
             currency_to: str,
             conversion_date: str,
             conversion_value: float,
-            expected_result: Optional[str],
+            expected_result: Optional[bool],
             expectation
     ) -> None:
         with expectation:
@@ -73,7 +73,7 @@ class TestDB:
             currency_from: str,
             currency_to: str,
             conversion_date: str,
-            expected_result: Optional[str],
+            expected_result: Optional[float],
             expectation
     ) -> None:
         with expectation:
@@ -98,7 +98,7 @@ class TestDB:
             currency_from: str,
             currency_to: str,
             conversion_date: str,
-            expected_result: Optional[str],
+            expected_result: Optional[bool],
             expectation
     ) -> None:
         with expectation:

@@ -15,7 +15,7 @@ class TestReceiptConversionValue:
             self, currency_from: str,
             currency_to: str,
             conversion_date: str,
-            expected_result: Optional[str],
+            expected_result: Optional[float],
             expectation
     ) -> None:
         with expectation:

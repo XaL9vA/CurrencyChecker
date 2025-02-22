@@ -126,8 +126,8 @@ class TestArgsValidator:
             self,
             currency_from: str,
             currency_to: str,
-            expectation,
-            expected_result
+            expected_result: None,
+            expectation
     ) -> None:
         with expectation:
             assert ArgsValidator.identity_check(
