@@ -1,5 +1,5 @@
 from contextlib import nullcontext as does_not_raise
-from typing import Optional, Union
+from typing import Optional
 import pytest
 from db import Storage
 
@@ -12,7 +12,7 @@ def test_db():
 
 
 @pytest.fixture(scope="function", autouse=True)
-def test_add():
+def  test_db_and_add():
     db = Storage(":memory:")
     data = [
         ("USD", "RUB", "15.02.2025", 91.34),
@@ -69,7 +69,7 @@ class TestDB:
                              )
     def test_get(
             self,
-            test_add: Storage,
+            test_db_and_add: Storage,
             currency_from: str,
             currency_to: str,
             conversion_date: str,
@@ -77,7 +77,7 @@ class TestDB:
             expectation
     ) -> None:
         with expectation:
-            result = test_add.get(
+            result =  test_db_and_add.get(
                 currency_from=currency_from,
                 currency_to=currency_to,
                 conversion_date=conversion_date
@@ -94,7 +94,7 @@ class TestDB:
                              )
     def test_exists(
             self,
-            test_add: Storage,
+            test_db_and_add: Storage,
             currency_from: str,
             currency_to: str,
             conversion_date: str,
@@ -102,7 +102,7 @@ class TestDB:
             expectation
     ) -> None:
         with expectation:
-            result = test_add.exists(
+            result =  test_db_and_add.exists(
                 currency_from=currency_from,
                 currency_to=currency_to,
                 conversion_date=conversion_date,

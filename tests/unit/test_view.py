@@ -1,4 +1,3 @@
-import pathlib
 from typing import Optional
 import pytest
 from dto import ViewDTO
@@ -24,7 +23,6 @@ class TestView:
             currency_from=currency_from,
             currency_to=currency_to,
             conversion_date=conversion_date,
-            output_channel="terminal",
             conversion_value=conversion_value
         )
         terminal_view = TerminalOutput()
@@ -48,13 +46,12 @@ class TestView:
             expected_result: Optional[bool],
             tmp_path
     ) -> None:
-        tmp_file = tmp_path / "test_history.txt"
+        tmp_file = tmp_path / "test_history.csv"
 
         view_args: ViewDTO = ViewDTO(
             currency_from=currency_from,
             currency_to=currency_to,
             conversion_date=conversion_date,
-            output_channel="file",
             conversion_value=conversion_value
         )
 

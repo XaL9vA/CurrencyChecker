@@ -44,15 +44,14 @@ def main():
         currency_from=args.currency_from,
         currency_to=args.currency_to,
         conversion_date=args.conversion_date,
-        output_channel=args.output_channel,
         conversion_value=conversion_value
     )
 
     if args.output_channel == "file":
-        file_view = FileOutput("converter_history.txt")
+        file_view = FileOutput("converter_history.csv")
         file_view.view(view_args=view_args)
 
-    if args.output_channel == "terminal":
+    else:
         terminal_view = TerminalOutput()
         terminal_view.view(view_args=view_args)
 
