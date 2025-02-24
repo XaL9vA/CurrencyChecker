@@ -1,10 +1,12 @@
-from greetings import greetings
-from dto import CLIArgs, ViewDTO
-from read_args import read_args
-from converter import CurrenciesConverter
-from config import config
-from db import Storage
-from view import TerminalOutput, FileOutput
+from typing import Optional
+
+from src.greetings import greetings
+from src.dto import CLIArgs, ViewDTO
+from src.read_args import read_args
+from src.converter import CurrenciesConverter
+from src.config import config, VIEW_CHANNELS_MAP, VIEW_CHANNELS_ARGS_MAP
+from src.db import Storage
+from src.view import View
 
 
 def main():
@@ -19,15 +21,19 @@ def main():
         conversion_date=args.conversion_date
     )
 
+    conversion_value: float
     if exists:
-        conversion_value: float = db.get(
+        db_conversion_value: Optional[float] = db.get(
             currency_from=args.currency_from,
             currency_to=args.currency_to,
             conversion_date=args.conversion_date
         )
+
+        assert db_conversion_value is not None
+        conversion_value = db_conversion_value
     else:
         converter = CurrenciesConverter(config.api_key)
-        conversion_value: float = converter.convert(
+        conversion_value = converter.convert(
             conversion_date=args.conversion_date,
             currency_from=args.currency_from,
             currency_to=args.currency_to
@@ -47,13 +53,8 @@ def main():
         conversion_value=conversion_value
     )
 
-    if args.output_channel == "file":
-        file_view = FileOutput("converter_history.csv")
-        file_view.view(view_args=view_args)
-
-    else:
-        terminal_view = TerminalOutput()
-        terminal_view.view(view_args=view_args)
+    view: View = VIEW_CHANNELS_MAP[args.output_channel](**VIEW_CHANNELS_ARGS_MAP[args.output_channel])
+    view.view(view_args=view_args)
 
 
 if __name__ == '__main__':

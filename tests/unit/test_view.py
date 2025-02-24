@@ -1,7 +1,9 @@
-from typing import Optional
 import pytest
-from dto import ViewDTO
-from view import TerminalOutput, FileOutput
+
+from typing import Optional
+
+from src.dto import ViewDTO
+from src.view import TerminalView, FileView
 
 
 class TestView:
@@ -25,9 +27,9 @@ class TestView:
             conversion_date=conversion_date,
             conversion_value=conversion_value
         )
-        terminal_view = TerminalOutput()
+        terminal_view = TerminalView()
 
-        assert terminal_view.view(view_args=view_args) == expected_result
+        assert terminal_view.view(view_args=view_args) == expected_result  # type: ignore[func-returns-value]
 
     @pytest.mark.parametrize("currency_from, currency_to, conversion_date, conversion_value, expected_result",
                              [
@@ -55,6 +57,6 @@ class TestView:
             conversion_value=conversion_value
         )
 
-        file_output = FileOutput(str(tmp_file))
+        file_output = FileView(**{"filename" : tmp_file})
 
-        assert file_output.view(view_args) == expected_result
+        assert file_output.view(view_args) == expected_result  # type: ignore[func-returns-value]

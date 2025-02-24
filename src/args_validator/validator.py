@@ -1,5 +1,6 @@
-from datetime import datetime
+import datetime
 import click
+
 from .constants import CURRENCIES, OUTPUT_CHANNELS
 
 
@@ -12,18 +13,18 @@ class ArgsValidator:
             conversion_date: str
     ) -> str:
         try:
-            conversion_date_format: datetime.date = datetime.strptime(conversion_date, "%d.%m.%Y").date()
-            minimum_date_allowed: datetime.date = datetime.strptime("01.01.2000", "%d.%m.%Y").date()
-            date_today: datetime.date = datetime.now().date()
+            conversion_date_format: datetime.date = datetime.datetime.strptime(conversion_date, "%d.%m.%Y").date()
+            minimum_date_allowed: datetime.date = datetime.datetime.strptime("01.01.2000", "%d.%m.%Y").date()
+            date_today: datetime.date = datetime.datetime.now().date()
         except ValueError:
-            raise click.BadParameter(f"ValueError: your date is incorrect, please check")
+            raise click.BadParameter("ValueError: your date is incorrect, please check")
 
         if conversion_date_format > date_today:
-            raise click.BadParameter(f"the date cannot be greater than the current date")
+            raise click.BadParameter("the date cannot be greater than the current date")
         elif conversion_date_format == date_today:
-            raise click.BadParameter(f"The date can't be “today,” only the previous date")
+            raise click.BadParameter("The date can't be “today,” only the previous date")
         elif conversion_date_format < minimum_date_allowed:
-            raise click.BadParameter(f"Your date cannot be less than 01.01.2000 :)")
+            raise click.BadParameter("Your date cannot be less than 01.01.2000 :)")
         return conversion_date
 
     @staticmethod
@@ -47,7 +48,7 @@ class ArgsValidator:
         if currency_to not in CURRENCIES:
             raise click.BadParameter(f"{currency_to} does not exist in a valid list")
         """A double check is performed by calling the parameter currency_from"""
-        currency_from = ctx.params.get("currency_from")
+        currency_from: str = str(ctx.params.get("currency_from"))
         ArgsValidator.identity_check(currency_from=currency_from, currency_to=currency_to)
         return currency_to
 
@@ -68,4 +69,4 @@ class ArgsValidator:
             currency_to: str
     ) -> None:
         if currency_from.upper() == currency_to.upper():
-            raise click.BadParameter(f"Currencies for conversion cannot be the same")
+            raise click.BadParameter("Currencies for conversion cannot be the same")
