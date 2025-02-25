@@ -14,7 +14,7 @@ def main():
 
     args: CLIArgs = read_args(standalone_mode=False)
 
-    db = Storage("currency_operations.db")
+    db: Storage = config.db_name
     exists = db.exists(
         currency_from=args.currency_from,
         currency_to=args.currency_to,
