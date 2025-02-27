@@ -2,8 +2,8 @@ CurrencyChecker💲
 ---
 ---
 
-| [![eng](https://img.shields.io/badge/lng-eng-green.svg)](https://github.com/XaL9vA/CurrencyChecker/tree/main/docs/readme_eng.md) | [![ru](https://img.shields.io/badge/lng-ru-red.svg)](https://github.com/XaL9vA/CurrencyChecker/tree/main/docs/readme_ru.md) |  
-|----------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|   
+| [![eng](https://img.shields.io/badge/lng-eng-green.svg)](https://github.com/XaL9vA/CurrencyChecker/tree/main/docs/README.md) | [![ru](https://img.shields.io/badge/lng-ru-red.svg)](https://github.com/XaL9vA/CurrencyChecker/tree/main/docs/readme_ru.md) |  
+|------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|   
 
 ### Contents:
 
