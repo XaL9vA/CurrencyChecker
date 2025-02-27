@@ -9,7 +9,7 @@ class Storage:
         self.__cursor: sqlite3.Cursor = self.__session.cursor()
         self.__create_tables()
 
-    def get(self, currency_from: str, currency_to: str, conversion_date: str) -> Optional[float]:
+    def get(self, currency_from: str, currency_to: str, conversion_date: str) -> float:
         with self.__session:
             self.__cursor.execute("""
                 SELECT conversion_value FROM currencies_history
@@ -18,7 +18,7 @@ class Storage:
 
             row: Optional[Tuple[float]] = self.__cursor.fetchone()
             if row is None:
-                return None
+                raise ValueError("Conversion not found")
 
             return float(row[0])
 
@@ -45,6 +45,7 @@ class Storage:
                 """, (currency_from, currency_to, conversion_date))
 
             if self.__cursor.fetchone():
+                print("The record exists in the database")
                 return True  # Returns if the record is found
 
             return False
