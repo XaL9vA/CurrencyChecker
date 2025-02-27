@@ -1,3 +1,9 @@
+import sys
+import os
+
+# Adding ./src to python path for running from console purpose:
+sys.path.append(os.getcwd())
+
 from src.greetings import greetings
 from src.read_args import read_args
 from src.dto import CLIArgs

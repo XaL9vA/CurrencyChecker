@@ -17,30 +17,36 @@ class Logic:
         self.__views_map: Dict[str, View] = views_map
 
     def run(self, args: CLIArgs):
+        conversion_value: float
+
         if self.__storage.exists(
                 currency_from=args.currency_from,
                 currency_to=args.currency_to,
                 conversion_date=args.conversion_date
-        ):
-            conversion_value: float = self.__storage.get(
+        ) is True:
+            db_conversion_value: float = self.__storage.get(
                 currency_from=args.currency_from,
                 currency_to=args.currency_to,
                 conversion_date=args.conversion_date
             )
+
+            conversion_value = db_conversion_value
+
         else:
             converter: CurrenciesConverter = CurrenciesConverter(config.api_key)
-            conversion_value: float = converter.convert(  # type: ignore[no-redef]
+            converter_conversion_value: float = converter.convert(
                 conversion_date=args.conversion_date,
                 currency_from=args.currency_from,
                 currency_to=args.currency_to
             )
+            conversion_value = converter_conversion_value
 
-        self.__storage.add(
-            currency_from=args.currency_from,
-            currency_to=args.currency_to,
-            conversion_date=args.conversion_date,
-            conversion_value=conversion_value
-        )
+            self.__storage.add(
+                currency_from=args.currency_from,
+                currency_to=args.currency_to,
+                conversion_date=args.conversion_date,
+                conversion_value=conversion_value
+            )
 
         view_args: ViewDTO = ViewDTO(
             currency_from=args.currency_from,
