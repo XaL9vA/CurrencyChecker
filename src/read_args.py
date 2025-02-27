@@ -1,6 +1,7 @@
 import click
-from dto import CLIArgs
-from args_validator import ArgsValidator
+
+from src.dto import CLIArgs
+from src.args_validator import ArgsValidator
 
 
 @click.command()

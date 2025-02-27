@@ -1,4 +1,5 @@
 import sqlite3
+
 from typing import Tuple, Optional
 
 
@@ -8,7 +9,7 @@ class Storage:
         self.__cursor: sqlite3.Cursor = self.__session.cursor()
         self.__create_tables()
 
-    def get(self, currency_from: str, currency_to: str, conversion_date: str) -> Optional[float]:
+    def get(self, currency_from: str, currency_to: str, conversion_date: str) -> float:
         with self.__session:
             self.__cursor.execute("""
                 SELECT conversion_value FROM currencies_history
@@ -17,22 +18,22 @@ class Storage:
 
             row: Optional[Tuple[float]] = self.__cursor.fetchone()
             if row is None:
-                return None
+                raise ValueError("Conversion not found")
 
             return float(row[0])
 
     def add(self, currency_from: str, currency_to: str, conversion_date: str, conversion_value: float) -> None:
         with self.__session:
-            self.__cursor.execute("""   
+            self.__cursor.execute("""
                 INSERT INTO currencies_history (
-                currency_from, 
-                currency_to, 
-                conversion_date, 
+                currency_from,
+                currency_to,
+                conversion_date,
                 conversion_value
                 )
                 VALUES (?, ?, ?, ?)
                 """, (currency_from, currency_to, conversion_date, conversion_value))
-            
+
             self.__session.commit()
             print("A new entry has been added")
 
@@ -44,8 +45,9 @@ class Storage:
                 """, (currency_from, currency_to, conversion_date))
 
             if self.__cursor.fetchone():
+                print("The record exists in the database")
                 return True  # Returns if the record is found
-            
+
             return False
 
     def close(self) -> None:
@@ -55,7 +57,6 @@ class Storage:
 
         if hasattr(self, '__session') and self.__session:
             self.__session.close()
-            self.__session = None
             print("Database connection closed")
 
     def __create_tables(self) -> None:

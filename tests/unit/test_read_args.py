@@ -1,9 +1,11 @@
+import click
+import pytest
+
 from contextlib import nullcontext as does_not_raise
 from typing import Optional
 from datetime import datetime
-import click
-import pytest
-from args_validator.validator import ArgsValidator
+
+from src.args_validator import ArgsValidator
 
 
 class TestArgsValidator:
@@ -83,7 +85,7 @@ class TestArgsValidator:
         with expectation:
             assert ArgsValidator.validate_currency_to(
                 ctx=ctx,
-                param=None,
+                param=None,  # type: ignore[arg-type]
                 currency_to=currency_to
             ) == expected_result
 
@@ -126,8 +128,8 @@ class TestArgsValidator:
             self,
             currency_from: str,
             currency_to: str,
-            expectation,
-            expected_result
+            expected_result: None,
+            expectation
     ) -> None:
         with expectation:
             assert ArgsValidator.identity_check(

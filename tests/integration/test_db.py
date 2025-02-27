@@ -1,7 +1,9 @@
+import pytest
+
 from contextlib import nullcontext as does_not_raise
 from typing import Optional
-import pytest
-from db import Storage
+
+from src.db import Storage
 
 
 @pytest.fixture(scope="function", autouse=True)
@@ -12,7 +14,7 @@ def test_db():
 
 
 @pytest.fixture(scope="function", autouse=True)
-def test_add():
+def test_db_and_add():
     db = Storage(":memory:")
     data = [
         ("USD", "RUB", "15.02.2025", 91.34),
@@ -48,7 +50,7 @@ class TestDB:
             currency_to: str,
             conversion_date: str,
             conversion_value: float,
-            expected_result: Optional[str],
+            expected_result: Optional[bool],
             expectation
     ) -> None:
         with expectation:
@@ -57,27 +59,27 @@ class TestDB:
                 currency_to=currency_to,
                 conversion_date=conversion_date,
                 conversion_value=conversion_value
-            ) == expected_result
+            ) == expected_result  # type: ignore[func-returns-value]
 
     @pytest.mark.parametrize("currency_from, currency_to, conversion_date, expected_result, expectation",
                              [
                                  ("USD", "RUB", "15.02.2025", 91.34, does_not_raise()),
                                  ("EUR", "IDR", "13.02.2025", 17015.54, does_not_raise()),
-                                 ("RUB", "THB", "14.02.2025", None, does_not_raise()),
-                                 ("RUB", "GBP", "13.02.2025", None, does_not_raise()),
+                                 ("RUB", "THB", "14.02.2025", None, pytest.raises(ValueError)),
+                                 ("RUB", "GBP", "13.02.2025", None, pytest.raises(ValueError)),
                              ]
                              )
     def test_get(
             self,
-            test_add: Storage,
+            test_db_and_add: Storage,
             currency_from: str,
             currency_to: str,
             conversion_date: str,
-            expected_result: Optional[str],
+            expected_result: Optional[float],
             expectation
     ) -> None:
         with expectation:
-            result = test_add.get(
+            result = test_db_and_add.get(
                 currency_from=currency_from,
                 currency_to=currency_to,
                 conversion_date=conversion_date
@@ -94,15 +96,15 @@ class TestDB:
                              )
     def test_exists(
             self,
-            test_add: Storage,
+            test_db_and_add: Storage,
             currency_from: str,
             currency_to: str,
             conversion_date: str,
-            expected_result: Optional[str],
+            expected_result: Optional[bool],
             expectation
     ) -> None:
         with expectation:
-            result = test_add.exists(
+            result = test_db_and_add.exists(
                 currency_from=currency_from,
                 currency_to=currency_to,
                 conversion_date=conversion_date,

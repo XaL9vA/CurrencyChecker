@@ -1,5 +1,6 @@
 from typing import List
-from args_validator import CURRENCIES
+
+from src.args_validator import CURRENCIES
 
 
 def greetings() -> None:
