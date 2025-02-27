@@ -65,8 +65,8 @@ class TestDB:
                              [
                                  ("USD", "RUB", "15.02.2025", 91.34, does_not_raise()),
                                  ("EUR", "IDR", "13.02.2025", 17015.54, does_not_raise()),
-                                 ("RUB", "THB", "14.02.2025", None, does_not_raise()),
-                                 ("RUB", "GBP", "13.02.2025", None, does_not_raise()),
+                                 ("RUB", "THB", "14.02.2025", None, pytest.raises(ValueError)),
+                                 ("RUB", "GBP", "13.02.2025", None, pytest.raises(ValueError)),
                              ]
                              )
     def test_get(

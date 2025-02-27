@@ -8,6 +8,7 @@ from src.db import Storage
 if __name__ == '__main__':
     greetings()
     args: CLIArgs = read_args(standalone_mode=False)
+
     Logic(
         storage=Storage(config.db_filename),
         views_map=VIEW_MAP
