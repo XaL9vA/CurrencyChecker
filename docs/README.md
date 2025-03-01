@@ -2,14 +2,8 @@ CurrencyChecker💲
 ---
 ---
 
-<div style="margin-bottom: 20px;">
-  <button style="background: linear-gradient(to right, #444 45%, #4CAF50 50%); color: white; padding: 5px 5px; border: none; border-radius: 5px; cursor: pointer; font-family: Arial, sans-serif; font-size: 16px; transition: all 0.3s ease;" onclick="window.location.href='README.md'">
-    <span style="padding: 5px;">lang</span> <span style="padding: 5px;">ENG</span>
-  </button>
-  <button style="background: linear-gradient(to right, #444 45%, #f44336 50%); color: white; padding: 5px 5px; border: none; border-radius: 5px; cursor: pointer; font-family: Arial, sans-serif; font-size: 16px; transition: all 0.3s ease;" onclick="window.location.href='README_RUS.md'">
-    <span style="padding: 5px;">lang</span> <span style="padding: 5px;">RU</span>
-  </button>
-</div>
+[![en](https://img.shields.io/badge/🌐_lang-ENG-2ECC71.svg?style=for-the-badge&logo=globe&logoColor=white)](./README.md)
+[![ru](https://img.shields.io/badge/🌐_lang-RU-E74C3C.svg?style=for-the-badge&logo=globe&logoColor=white)](./README_RUS.md)
 
 ### Contents:
 
